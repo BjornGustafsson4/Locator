@@ -61,35 +61,31 @@ def nameFile(name):
 
 print("What would you like to do: \n 1. Move files \n 2. Rename files \n 3. Move and rename files \n 4. Quit")
 select = input("> ")
-while True:
-    if select == "1":
-        filename = input("What is the name of the file you're looking for: ")
-        extention = input("Is there a specific extention you want moved? (if no put 'Skip'): ")
-        sourceFolder = input("What is the source: ")
-        destination = input("What is the destination (put 'Create' for a new destination): ")
-        fileFormat(extention)
-        destinationNew = destinationMake(destination)
-        listdirs(sourceFolder)
-        break
-    elif select == "2":
-        filename = input("What is the name of the file you're looking for: ")
-        extention = input("Is there a specific extention you want moved? (if no put 'Skip'): ")
-        destinationNew = input("What is the source for the file: ")
-        name = input("Name of composer (First Last, 'Delete' to remove text): ")
-        nameFile(name)
-        break
-    elif select == "3":
-        filename = input("What is the name of the file you're looking for: ")
-        extention = input("Is there a specific extention you want moved? (if no put 'Skip'): ")
-        sourceFolder = input("What is the source: ")
-        destination = input("What is the destination (put 'Create' for a new destination): ")
-        name = input("Name of composer (First Last, 'Delete' to remove text): ")
-        fileFormat(extention)
-        destinationNew = destinationMake(destination)
-        listdirs(sourceFolder)
-        nameFile(name)
-        break
-    elif select == "4":
-        sys.exit()
-    else:
-        print("Please use one of the numbers to select an option")
+if select == "1":
+    filename = input("What is the name of the file you're looking for: ")
+    extention = input("Is there a specific extention you want moved? (if no put 'Skip'): ")
+    sourceFolder = input("What is the source: ")
+    destination = input("What is the destination (put 'Create' for a new destination): ")
+    fileFormat(extention)
+    destinationNew = destinationMake(destination)
+    listdirs(sourceFolder)
+elif select == "2":
+    filename = input("What is the name of the file you're looking for: ")
+    extention = input("Is there a specific extention you want moved? (if no put 'Skip'): ")
+    destinationNew = input("What is the source for the file: ")
+    name = input("Name of composer (First Last, 'Delete' to remove text): ")
+    nameFile(name)
+elif select == "3":
+    filename = input("What is the name of the file you're looking for: ")
+    extention = input("Is there a specific extention you want moved? (if no put 'Skip'): ")
+    sourceFolder = input("What is the source: ")
+    destination = input("What is the destination (put 'Create' for a new destination): ")
+    name = input("Name of composer (First Last, 'Delete' to remove text): ")
+    fileFormat(extention)
+    destinationNew = destinationMake(destination)
+    listdirs(sourceFolder)
+    nameFile(name)
+elif select == "4":
+    sys.exit()
+else:
+    print("Please use one of the numbers to select an option")
