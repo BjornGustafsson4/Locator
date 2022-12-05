@@ -1,7 +1,6 @@
 import os
 import shutil
 import glob
-import sys
 
 
 #Makes new directory based on inputted file name
@@ -27,7 +26,7 @@ def moveFiles(sourceFolder, filename, extention, destinationNew):
         if folder == destinationNew:
             continue
         else:
-            for file in glob.glob(f"{folder}\{filename}*{extention}"):
+            for file in glob.glob(f"{folder}\*{filename}*{extention}"):
                 shutil.move(file, destinationNew)
 
 
@@ -42,44 +41,45 @@ def namer(destinationNew, filename, extention):
         if addOrDelete.upper() == "ADD":  
             position = input("Do you want the new text 'before' or 'after' the file name? ")  
             if position.upper() == "AFTER":
-                for file in glob.glob(f"{destinationNew}\{filename}*{extention}"):
+                for file in glob.glob(f"{destinationNew}\*{filename}*{extention}"):
                     filelist = file.rsplit(".", 1)
                     fileNew = f"{filelist[0]}_{textChange}.{filelist[1]}"
                     shutil.move(file, fileNew)
-                print("Done! After")
+                print("Done!")
                 exit()
             elif position.upper() == "BEFORE":
-                for file in glob.glob(f"{destinationNew}\{filename}*{extention}"):
+                for file in glob.glob(f"{destinationNew}\*{filename}*{extention}"):
                     filelist = file.rsplit("\\", 1)
                     fileNew = f"{filelist[0]}\\{textChange}_{filelist[1]}"
                     shutil.move(file, fileNew)
-                print("Done! Before")
+                print("Done!")
                 exit()
             else:
-                print("Please input 'before' or 'after'.")
+                print("Please use valid data.\n\n\n")
                 continue
         elif addOrDelete.upper() == "DELETE":
-            for file in glob.glob(f"{destinationNew}\{filename}*{extention}"):
+            for file in glob.glob(f"{destinationNew}\*{filename}*{extention}"):
                 filelist = file.rsplit("\\", 1)
                 fileNew = f"{filelist[0]}\\{filelist[1].replace(textChange, '')}"
                 shutil.move(file, fileNew)
-            print("Done! Delete")
+            print("Done!")
             exit()
         else:
-            print("Please input 'add' or 'delete'.")
+            print("Please use valid data.\n\n\n")
             continue
 
 
-#Checks file extention or illegal characters
+#Checks file extention for illegal characters
 def fileFormat(extention):
     testlist = []
     for characters in list(extention):
         if characters.isalnum():
             testlist.append(characters)
     extention = "".join(testlist)
-    if extention.upper() == "SKIP":
+    if extention.upper() == "SKIP" or extention == '':
         extention = ".*"
-    extention = "." + extention
+    else:
+        extention = "." + extention
     return extention
 
 
@@ -94,54 +94,55 @@ def textCheck(filename):
     return filename
 
 #For selecting what functions to be run
-print("What would you like to do: \n 1. Move files \n 2. Rename files \n 3. Move and rename files \n 4. Quit")
-select = input("> ")
-if select == "1":
-    while True:
-        filename = input("What is the name of the file you're looking for: ")
-        extention = input("Is there a specific extention you want moved? (if not put 'Skip'): ")
-        sourceFolder = input("What is the source: ")
-        destination = input("What is the destination (put 'Create' for a new destination): ")
-        extention = fileFormat(extention)
-        filename = textCheck(filename)
-        if filename == "" or extention == "" or sourceFolder == "" or destination =="":
-            print("please input valid data")
-            continue
-        else:
-            break
-    destinationNew = destinationMake(destination, sourceFolder, filename)
-    moveFiles(sourceFolder, filename, extention, destinationNew)
-elif select == "2":
-    while True:
-        filename = input("What is the name of the file you're looking for: ")
-        extention = input("Is there a specific extention you want moved? (if not put 'Skip'): ")
-        destinationNew = input("What is the source: ")
-        extention = fileFormat(extention)
-        filename = textCheck(filename)
-        if filename == "" or extention == "" or destinationNew == "":
-            print("please input valid data")
-            continue
-        else:
-            break
-    namer(destinationNew, filename, extention)
-elif select == "3":
-    while True:
-        filename = input("What is the name of the file you're looking for: ")
-        extention = input("Is there a specific extention you want moved? (if no put 'Skip'): ")
-        sourceFolder = input("What is the source: ")
-        destination = input("What is the destination (put 'Create' for a new destination): ")
-        name = input("Name of composer (First Last, 'Delete' to remove text): ")
-        extention = fileFormat(extention)
-        filename = textCheck(filename)
-        if filename == "" or extention == "" or sourceFolder == "" or destination =="" or name == "":
-            print("please input valid data")
-            continue
-        else:
-            break
-    destinationNew = destinationMake(destination, sourceFolder, filename)
-    moveFiles(sourceFolder, filename, extention, destinationNew)
-    namer(name, destinationNew, filename, extention)
-elif select == "4":
-    sys.exit()
-else:
-    print("Please use one of the numbers to select an option")
+while True:
+    print("What would you like to do: \n 1. Move files \n 2. Rename files \n 3. Move and rename files \n 4. Quit")
+    select = input("> ")
+    if select == "1":
+        while True:
+            filename = input("What is the name of the file you're looking for: ")
+            extention = input("Is there a specific extention you want moved? (if not put 'Skip'): ")
+            sourceFolder = input("What is the source: ")
+            destination = input("What is the destination (put 'Create' for a new destination): ")
+            extention = fileFormat(extention)
+            filename = textCheck(filename)
+            if filename == "" or extention == "" or sourceFolder == "" or destination =="":
+                print("please input valid data\n\n\n")
+                continue
+            else:
+                break
+        destinationNew = destinationMake(destination, sourceFolder, filename)
+        moveFiles(sourceFolder, filename, extention, destinationNew)
+    elif select == "2":
+        while True:
+            filename = input("What is the name of the file you're looking for: ")
+            extention = input("Is there a specific extention you want moved? (if not put 'Skip'): ")
+            destinationNew = input("What is the source: ")
+            extention = fileFormat(extention)
+            filename = textCheck(filename)
+            if filename == '' or extention == '' or destinationNew == '':
+                print("please input valid data\n\n\n")
+                continue
+            else:
+                break
+        namer(destinationNew, filename, extention)
+    elif select == "3":
+        while True:
+            filename = input("What is the name of the file you're looking for: ")
+            extention = input("Is there a specific extention you want moved? (if no put 'Skip'): ")
+            sourceFolder = input("What is the source: ")
+            destination = input("What is the destination (put 'Create' for a new destination): ")
+            extention = fileFormat(extention)
+            filename = textCheck(filename)
+            if filename == "" or extention == "" or sourceFolder == "" or destination =="":
+                print("please input valid data\n\n\n")
+                continue
+            else:
+                break
+        destinationNew = destinationMake(destination, sourceFolder, filename)
+        moveFiles(sourceFolder, filename, extention, destinationNew)
+        namer(destinationNew, filename, extention)
+    elif select == "4":
+        exit()
+    else:
+        print("Please use one of the numbers to select an option\n\n\n")
+        continue
