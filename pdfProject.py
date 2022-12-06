@@ -76,7 +76,7 @@ def fileFormat(extention):
         if characters.isalnum():
             testlist.append(characters)
     extention = "".join(testlist)
-    if extention.upper() == "SKIP" or extention == '':
+    if extention.upper() == "SKIP":
         extention = ".*"
     else:
         extention = "." + extention
@@ -85,12 +85,13 @@ def fileFormat(extention):
 
 #Checks filename for illegal characters
 def textCheck(filename):
-    illegalCharacter = ["\\", "/", "|", ",", ":", "#", '"', "?", "<", ">", "*", " "]
+    illegalCharacter = ["\\", "/", "|", ",", ":", "#", '"', "?", "<", ">", "*"]
     characterList = []
     for character in list(filename):
         if character not in illegalCharacter:
             characterList.append(character)
     filename = "".join(characterList)
+    filename = filename.replace(" ", "_")
     return filename
 
 #For selecting what functions to be run
@@ -105,7 +106,7 @@ while True:
             destination = input("What is the destination (put 'Create' for a new destination): ")
             extention = fileFormat(extention)
             filename = textCheck(filename)
-            if filename == "" or extention == "" or sourceFolder == "" or destination =="":
+            if filename == "" or extention == "." or sourceFolder == "" or destination =="":
                 print("please input valid data\n\n\n")
                 continue
             else:
@@ -119,7 +120,7 @@ while True:
             destinationNew = input("What is the source: ")
             extention = fileFormat(extention)
             filename = textCheck(filename)
-            if filename == '' or extention == '' or destinationNew == '':
+            if filename == "" or extention == "." or destinationNew == "":
                 print("please input valid data\n\n\n")
                 continue
             else:
@@ -133,7 +134,7 @@ while True:
             destination = input("What is the destination (put 'Create' for a new destination): ")
             extention = fileFormat(extention)
             filename = textCheck(filename)
-            if filename == "" or extention == "" or sourceFolder == "" or destination =="":
+            if filename == "" or extention == "." or sourceFolder == "" or destination =="":
                 print("please input valid data\n\n\n")
                 continue
             else:
